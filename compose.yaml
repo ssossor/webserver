@@ -1,0 +1,28 @@
+services:
+  db:
+    image: custommariadb:latest
+    ports:
+      - "3306:3306"
+    networks:
+      - main
+    environment:
+      - MARIADB_ROOT_PASSWORD=1234
+    build:
+      dockerfile: mariadb.Dockerfile
+
+  webserver:
+    image: customphp:8.3-apache
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/var/www/html
+    networks:
+      - main
+    build:
+      dockerfile: php.Dockerfile
+
+volumes:
+  html:
+
+networks:
+  main: {}
